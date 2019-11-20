@@ -6,30 +6,17 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var session = require('express-session'); //express-session package for session 
-var mongoose = require('mongoose'); //Require for mongo db connection
+var session = require('express-session');
+var mongoose = require('mongoose');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
-var User = require('./models/user');
+var Account = require('./models/account');
 
-//Use mongodb connection string
-mongoose.connect(
-    'mongodb+srv://rav:rav@cluster0-oxrwb.mongodb.net/test?retryWrites=true&w=majority',
-    { useNewUrlParser: true, useUnifiedTopology: true }
-);
-
-//Successfully connected message
-
-var db = mongoose.connection;
-db.on('error', () => console.log('There was an error connecting'));
-db.once('open', () => console.log('We have connected to Mongo Atlas'));
-
-
-
+mongoose.connect('mongodb://localhost/JavaScriptAssign2');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
-var authRouter = require('./routes/auth');
+const MongoStore = require('connect-mongo')(session);
 
 var app = express();
 
@@ -44,43 +31,30 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
-app.use(
-    session({
-        secret: 'unicorn',
-        resave: false,
-        saveUninitialized: true
-    })
-);
-
-
-
-// Init Passport for Authentication, this must be done after we use our session
+// required for passport session
+app.use(session({
+    secret: 'secrettexthere',
+    saveUninitialized: true,
+    resave: true
+}));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use('/', routes);
+app.use('/users', users);
 
-
-passport.use(new LocalStrategy(User.authenticate()));
-
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
-
-app.use((req, res, next) => {
-    res.locals.isLoggedIn = req.isAuthenticated();
-    res.locals.user = req.user;
-
-    if (req.isAuthenticated()) {
-        res.locals.role = req.user.role;
-    } else {
-        res.locals.role = null;
-    }
-
-    next();
+//Serialize user
+passport.serializeUser(function (user, done) {
+    done(null, user.id)
 });
 
-app.use('/', authRouter);
-app.use('/', routes);
-app.use('/users', require('./routes/users'));
+//Deserialize user try to find username
+passport.deserializeUser(function (id, done) {
+    Account.findById(id, function (err, user) {
+        done(err, user);
+    });
+});
+
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
