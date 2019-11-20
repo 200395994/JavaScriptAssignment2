@@ -1,0 +1,24 @@
+﻿extends layout
+
+block content
+
+include header
+h1 Login
+
+form(method='post' action='/login')
+
+span Name
+input.contact(type = 'text', name = 'username', value = '')
+
+
+  .form - group
+span password
+input.contact(type = 'password', name = 'password', value = '')
+if error && error.length
+    .alert.alert - danger= error
+
+p(style = 'padding-top: 20px')
+span
+input.submit(type = 'submit', name = 'Login', value = 'Login')
+
+
