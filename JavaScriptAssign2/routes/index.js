@@ -18,8 +18,8 @@ router.get('/register', function (req, res) {
 });
 
 /* get SignIn page. */
-router.get('/signIn', function (req, res) {
-    res.render('signIn', { title: 'Express' });
+router.get('/login', function (req, res) {
+    res.render('login', { title: 'Express' });
 });
 
 
