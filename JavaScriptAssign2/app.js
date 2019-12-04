@@ -10,15 +10,28 @@ var session = require('express-session');
 var mongoose = require('mongoose');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
-var Account = require('./models/account');
+var User = require('./models/user');
 
-mongoose.connect('mongodb://localhost/JavaScriptAssign2');
+mongoose.connect(
+    'mongodb + srv://rav:rav@cluster0-oxrwb.mongodb.net/test?retryWrites=true&w=majority',
+    { useNewUrlParser: true, useUnifiedTopology: true }
+);
+
+//Successfully connected message
+
+var db = mongoose.connection;
+db.on('error', () => console.log('There was an error connecting'));
+db.once('open', () => console.log('We have connected to Mongo Atlas'));
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var authorRouter = require('./routes/authentic');
+var advertRouter = require('./routes/advertisment');
+
 const MongoStore = require('connect-mongo')(session);
 
 var app = express();
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -31,19 +44,30 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
 // required for passport session
-app.use(session({
-    secret: 'secrettexthere',
-    saveUninitialized: true,
-    resave: true
-}));
-app.use(passport.initialize());
-app.use(passport.session());
+//app.use(session({
+  //  secret: 'secrettexthere',
+  //  saveUninitialized: true,
+   // resave: true
+//}));
+app.use(
+    session({
+        secret: 'unicorn',
+        resave: false,
+        saveUninitialized: true
+    })
+);
+
+app.use('/', authorRouter);
+app.use('/', advertRouter);
 app.use('/', routes);
 app.use('/users', users);
+app.use('/users', require('./routes/users'));
+app.use('/users', require('./routes/advertisment'));
 
 //Serialize user
-passport.serializeUser(function (user, done) {
+ passport.serializeUser(function (user, done) {
     done(null, user.id)
 });
 

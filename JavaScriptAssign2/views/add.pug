@@ -1,0 +1,15 @@
+﻿extends layout
+
+block content
+    form(method='post' action='/advertisment/add')
+          div.form-group
+            label(for='name') Product Name:
+            input#name.form-control(type='text', required='name' name='name')
+          div.form-group
+            label(for='description') Description:
+            input#description.form-control(type='text',  name='description')
+          div.form-group
+            label(for='price') Price:
+            input#price.form-control(type='number', required='price' name='price') button.btn.btn-primary(type='submit') Sign up
+
+        button.btn.btn-primary(type='submit') Add Products

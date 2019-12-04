@@ -1,0 +1,15 @@
+﻿extends layout
+
+block content
+    h2 Edit Product
+        form(method='POST' action='/advertisment/edit')
+          div.form-group
+            label(for='productname') Product Name:
+            input#productname.form-control(type='text', required='productname' name='productname')
+          div.form-group
+            label(for='description') Description:
+            input#description.form-control(type='text',  name='description')
+          div.form-group
+            label(for='price') Price:
+            input#price.form-control(type='number', required='price' name='price')
+         button.btn.btn-primary(type='submit') Edit Products
