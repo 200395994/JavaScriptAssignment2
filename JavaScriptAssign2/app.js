@@ -29,8 +29,8 @@ db.once('open', () => console.log('We have connected to Mongo Atlas'));
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
-var routerAuth = require('./routes/auth');
-//var routerAdv = require('./routes/advertisment');
+var routerAuth = require('./routes/authentic');
+var routerAdv = require('./routes/advertisment');
 
 var app = express();
 
@@ -80,10 +80,10 @@ app.use((req, res, next) => {
 });
 
 app.use('/', routerAuth);
-//app.use('/', routerAdv);
+app.use('/', routerAdv);
 app.use('/', routes);
 app.use('/users', require('./routes/users'));
-//app.use('/users', require('./routes/advertisment'));
+app.use('/users', require('./routes/advertisment'));
 
 
 // catch 404 and forward to error handler

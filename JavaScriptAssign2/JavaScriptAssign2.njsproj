@@ -40,10 +40,13 @@
     <Compile Include="routes\advertisment.js">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="routes\auth.js">
+    <Compile Include="routes\authentic.js">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="routes\index.js" />
+    <Compile Include="routes\server.js">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="routes\users.js" />
     <Compile Include="views\login.pug">
       <SubType>Code</SubType>
@@ -55,6 +58,9 @@
     </Content>
     <Content Include="README.md" />
     <Content Include="views\add.pug">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="views\advertisment.pug">
       <SubType>Code</SubType>
     </Content>
     <Content Include="views\edit.pug">
@@ -70,6 +76,9 @@
     <Content Include="views\layout.pug" />
     <Content Include="views\error.pug" />
     <Content Include="views\register.pug">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="views\added.pug">
       <SubType>Code</SubType>
     </Content>
   </ItemGroup>

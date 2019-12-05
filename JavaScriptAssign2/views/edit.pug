@@ -1,15 +1,19 @@
 ﻿extends layout
 
 block content
-    h2 Edit Product
-        form(method='POST' action='/advertisment/edit')
-          div.form-group
-            label(for='productname') Product Name:
-            input#productname.form-control(type='text', required='productname' name='productname')
-          div.form-group
-            label(for='description') Description:
-            input#description.form-control(type='text',  name='description')
-          div.form-group
-            label(for='price') Price:
-            input#price.form-control(type='number', required='price' name='price')
-         button.btn.btn-primary(type='submit') Edit Products
+    a(href='/advertisment' title='List Products') List Products
+      h5.w3-center.w3-padding-48
+        span.w3-tag.w3-large UPDATE ADVERTISE
+    form(method='post' action='/advertisment/edit')
+    input(name='id' type='hidden' value=advertisment.id)
+    div.add
+      label Product Name
+      input(name='productname' required placeholder='Title' value=advertisment.productname)
+    div.add
+      label Description
+      input(name='description' required placeholder='Description' value=advertisment.description)
+    div.add
+      label Price
+      input(name='price' required placeholder='Price' type="number" value=advertisment.price)
+
+    input.added(type='submit' value='Update')

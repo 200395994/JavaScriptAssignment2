@@ -4,8 +4,7 @@ var router = express.Router();
 var Advertise = require('../models/advertisment');
 
 
-//
-GET home page. 
+// get home page
 router.get('/', function (req, res) {
     res.render('index', { title: 'Express' });
 });
@@ -14,7 +13,7 @@ router.get('/', function (req, res) {
 router.get('/advertisment', function (req, res) {
     Advertise.find(function (err, advertisment) {
         if (err) console.log(err);
-        else res.render('advertisment', { alladvertisment: advertisment });
+        else res.render('advertisment', { allAdvertisment: advertisment });
     });
 });
 
@@ -28,15 +27,14 @@ router.get('/advertisment/add', isLoggedIn, function (req, res) {
 router.post('/advertisment/add', isLoggedIn, function (req, res) {
     var id = req.params.id;
     Advertise.create({
-        title: req.body.title,
+        productname: req.body.productname,
         description: req.body.description,
-        price: req.body.price,
-        category: req.body.category
+        price: req.body.price
     }, function (err, Advertise) {
         if (err) console.log(err);
         else {
             console.log('Add added : ' + Advertise);
-            res.render('added', { advertisment: Advertise.title });
+            res.render('added', { advertisment: Advertise.productname });
         }
     });
 });
@@ -64,7 +62,7 @@ router.get('/advertisment/edit/:id', isLoggedIn, function (req, res) {
         if (err)
             res.send('advertisment : ' + id + 'not found!');
         else
-            res.render('editAdd', { advertisment: product });
+            res.render('edit', { advertisment: product });
     });
 });
 
@@ -73,10 +71,9 @@ router.post('/advertisment/edit', isLoggedIn, function (req, res) {
     var id = req.body.id;
     var editedAdvertisment = {
         _id: id,
-        title: req.body.title,
+        productname: req.body.productname,
         description: req.body.description,
-        price: req.body.price,
-        category: req.body.category,
+        price: req.body.price
     };
     Advertise.updateOne({ _id: id }, editedAdvertisment, function (err) {
         if (err) res.send('advertisment: ' + id + ' not found!');
@@ -93,7 +90,7 @@ function isLoggedIn(req, res, next) {
         return next();
     }
     console.log('Not authenticated!');
-    res.redirect('/signIn');
+    res.redirect('/login');
 }
 
 

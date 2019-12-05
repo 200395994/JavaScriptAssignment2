@@ -27,10 +27,10 @@ router.post('/register', (req, res, next) => {
 
     User.register(
         new User({ username: req.body.username }),
-        req.body.password, // Password for hashing
+        req.body.password,
         function (err, account) {
             if (err) {
-                // If there's an error, render the register page
+                //if there is any error it will show register page
                 console.log(err);
                 return res.render('register', { account: account });
             }
@@ -43,9 +43,9 @@ router.post('/register', (req, res, next) => {
     );
 });
 
-// Route 5 - GET Logout ( logout from nav )
+// Logout
 router.get('/logout', (req, res, next) => {
-    // Destroy session
+    // session will destroy from thiscode
     req.session.destroy(() => {
         res.redirect('/');
     });

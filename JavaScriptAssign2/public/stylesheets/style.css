@@ -2,7 +2,7 @@
 form {
     height: 80%;
     padding-top: 10px;
-    margin: 20px;
+    margin: 10px;
     padding-bottom: 10px;
     text-shadow: 1px 1px grey;
     line-height: 1.4;
@@ -23,9 +23,9 @@ form {
         -webkit-appearance: none;
         display: block;
         border: 0;
-        padding: 0.75em;
+        padding: 0.2em;
         font-size: 2em;
-        border-radius: 8px;
+        border-radius: 6px;
         border: solid 1px #ddd;
         background: #fff;
         color: #bbb;
@@ -45,7 +45,7 @@ form {
         position: relative;
         box-sizing: border-box;
         height: auto;
-        padding: 10px;
+        padding: 5px;
         font-size: 16px;
         margin: 2px 0px 2px 0px;
     }
