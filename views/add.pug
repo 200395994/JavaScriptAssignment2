@@ -1,0 +1,14 @@
+﻿block content
+  a(href='/advertisment' title='View all products') Product's List
+  h1 Add A New Product
+  form(method='post' action='/advertisment/add')
+    div
+      label Product Name
+      input(name='productname' required placeholder='Title' value= '')
+    div
+      label Description
+      input(name='description' required placeholder='Description' value= '')
+    div
+      label Price
+      input(name='price' required placeholder='Price' type="number" value= '')
+    input(type='submit' value='Add')
