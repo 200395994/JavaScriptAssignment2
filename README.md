@@ -1,3 +1,0 @@
-﻿# JavaScriptAssign2
-
-
